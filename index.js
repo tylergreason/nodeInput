@@ -1,20 +1,16 @@
-// let p = require('prompt')
-
-// p.start() 
-
-// const getInput = () => {
-//     p.get(['type stuf'], (err,result) => {
-//     console.log(('you typed'));
-//     console.log(result);
-// })
-// }
-
-// getInput()
-
 let options = {
     1: 'up', 
     2: 'down'
 }
+
+const printObjectValues = (obj) => {
+    for (prop in obj){
+        console.log(`${prop}: ${obj[prop]}`);
+    }   
+    // need to return empty string to prvent it from logging 'undefined'
+    return ''
+}
+
 const clearConsole = function () {
     return process.stdout.write('\033c');
   }
@@ -26,18 +22,17 @@ const rl = readline.createInterface({
 });
 
 const recursiveAsyncReadline = () => {
-    rl.question('Type your answer \n', function(answer){
+    rl.question(`Type your answer \n ${printObjectValues(options)}`, function(answer){
         if (answer === 'exit'){
             console.log('you exited');
             rl.close()
         }else{
             clearConsole()
-            console.log(answer);
-            options[answer]
-            ?
-            console.log(options[answer])
-            :
-            console.log('invalid choice');
+            if(options[answer]){
+                console.log(options[answer]);
+            }else{
+                console.log('invalid choice');
+            }
             recursiveAsyncReadline()
         }
     })
